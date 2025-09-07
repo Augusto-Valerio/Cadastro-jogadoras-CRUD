@@ -1,0 +1,106 @@
+const dadosIniciais = [
+  {
+    nome: "Andressa Alves",
+    posicao: "Meio-campo",
+    clube: "Corinthians",
+    foto: "https://cdn.meutimao.com.br/_upload/noticia/2025/07/13/andressa-alves-da-passe-decisivo-e-sobe-em-dl.jpg",
+    gols: 15,
+    assistencias: 10,
+    jogos: 28,
+    favorita: false,
+  },
+  {
+    nome: "Dayana Rodríguez",
+    posicao: "Meio-campo",
+    clube: "Corinthians",
+    foto: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1KAObr.img?w=614&h=462&m=6&x=237&y=107&s=63&d=63",
+    gols: 5,
+    assistencias: 12,
+    jogos: 30,
+    favorita: false,
+  },
+  {
+    nome: "Mariza",
+    posicao: "Zagueira",
+    clube: "Corinthians",
+    foto: "https://cdn.meutimao.com.br/_upload/noticia/2023/11/04/mariza-foi-eleita-a-craque-da-partida-pela-1z.jpg",
+    gols: 2,
+    assistencias: 1,
+    jogos: 32,
+    favorita: false,
+  },
+  {
+    nome: "Thaís Regina",
+    posicao: "Zagueira",
+    clube: "Corinthians",
+    foto: "https://cdn.meutimao.com.br/fotos-do-corinthians/w941/2025/03/27/thais_regina_com_a_bola_diante_do_juventude_s5tm.jpg",
+    gols: 1,
+    assistencias: 2,
+    jogos: 25,
+    favorita: false,
+  },
+  {
+    nome: "Letícia Teles",
+    posicao: "Zagueira",
+    clube: "Corinthians",
+    foto: "https://www.meutimao.com.br/fotos-do-corinthians/w364/2025/08/20/leticia_teles_em_treinamento_do_corinthians_odem.jpg",
+    gols: 0,
+    assistencias: 0,
+    jogos: 18,
+    favorita: false,
+  },
+];
+
+// Inicializa localStorage
+window.onload = () => {
+  if (!localStorage.getItem("jogadoras")) {
+    localStorage.setItem("jogadoras", JSON.stringify(dadosIniciais));
+  }
+  listarJogadoras();
+};
+
+// Listar jogadoras
+function listarJogadoras() {
+  const lista = document.getElementById("lista-jogadoras");
+  lista.innerHTML = "";
+
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+
+  jogadoras.forEach((jogadora, index) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${jogadora.foto}" alt="${jogadora.nome}">
+      <h3>${jogadora.nome}</h3>
+      <p>Posição: ${jogadora.posicao}</p>
+      <p>Clube: ${jogadora.clube}</p>
+      <p>Gols: ${jogadora.gols} | Assistências: ${jogadora.assistencias} | Jogos: ${jogadora.jogos}</p>
+    `;
+
+    // Botão de editar jogadora
+    const btnEditar = document.createElement("button");
+    btnEditar.textContent = "✏️ Editar";
+    btnEditar.addEventListener("click", () => editarJogadora(index));
+
+    lista.appendChild(card);
+    card.appendChild(btnEditar);
+  });
+}
+
+// Editar jogadora
+function editarJogadora(index) {
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+  const j = jogadoras[index];
+
+  document.getElementById("nome").value = j.nome;
+  document.getElementById("posicao").value = j.posicao;
+  document.getElementById("clube").value = j.clube;
+  document.getElementById("foto").value = j.foto;
+  document.getElementById("gols").value = j.gols;
+  document.getElementById("assistencias").value = j.assistencias;
+  document.getElementById("jogos").value = j.jogos;
+
+  editando = index;
+  cancelEdit.style.display = "inline-block";
+}
