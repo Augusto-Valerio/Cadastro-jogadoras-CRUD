@@ -155,3 +155,10 @@ function editarJogadora(index) {
   editando = index;
   cancelEdit.style.display = "inline-block";
 }
+
+// Cancelar edição
+cancelEdit.addEventListener("click", () => {
+  editando = -1;
+  jogadoraForm.reset();
+  cancelEdit.style.display = "none";
+});
