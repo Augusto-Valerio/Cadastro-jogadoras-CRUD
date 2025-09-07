@@ -51,6 +51,10 @@ const dadosIniciais = [
   },
 ];
 
+const jogadoraForm = document.getElementById("jogadora-form");
+const cancelEdit = document.getElementById("cancelar-edicao");
+let editando = -1;
+
 // Inicializa localStorage
 window.onload = () => {
   if (!localStorage.getItem("jogadoras")) {
@@ -83,10 +87,82 @@ function listarJogadoras() {
     btnEditar.textContent = "✏️ Editar";
     btnEditar.addEventListener("click", () => editarJogadora(index));
 
+     // Botão de excluir jogadora
+    const btnRemover = document.createElement("button");
+    btnRemover.textContent = "🗑️ Excluir";
+    btnRemover.addEventListener("click", () => removerJogadora(index));
+
+    //Botão de favoritar jogadora
+    const btnFavoritar = document.createElement("button");
+    btnFavoritar.className = "btn-favoritar";
+
+    const imgFavoritar = document.createElement("img");
+    imgFavoritar.src = jogadora.favorita
+      ? "./assets/icons/starSelect.svg"
+      : "./assets/icons/star.svg";
+    imgFavoritar.alt = "Favoritar";
+
+    btnFavoritar.innerHTML = "";
+    btnFavoritar.appendChild(imgFavoritar);
+
+    btnFavoritar.addEventListener("click", () => {
+      favoritarJogadora(index);
+    });
+
     lista.appendChild(card);
+    
     card.appendChild(btnEditar);
+    card.appendChild(btnRemover);
+    card.appendChild(btnFavoritar);
   });
 }
+
+// Adicionar / Editar jogadora
+jogadoraForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const nome = document.getElementById("nome").value;
+  const posicao = document.getElementById("posicao").value;
+  const clube = document.getElementById("clube").value;
+  const foto = document.getElementById("foto").value;
+  const gols = document.getElementById("gols").value;
+  const assistencias = document.getElementById("assistencias").value;
+  const jogos = document.getElementById("jogos").value;
+
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+
+  if (editando === -1) {
+    jogadoras.push({
+      nome,
+      posicao,
+      clube,
+      foto,
+      gols,
+      assistencias,
+      jogos,
+      favorita: false,
+    });
+    alert("Jogadora adicionada com sucesso!");
+  } else {
+    jogadoras[editando] = {
+      nome,
+      posicao,
+      clube,
+      foto,
+      gols,
+      assistencias,
+      jogos,
+      favorita: jogadoras[editando].favorita,
+    };
+    alert("Jogadora editada com sucesso!");
+    editando = -1;
+    cancelEdit.style.display = "none";
+  }
+
+  localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
+  jogadoraForm.reset();
+  listarJogadoras();
+});
 
 // Editar jogadora
 function editarJogadora(index) {
@@ -103,4 +179,28 @@ function editarJogadora(index) {
 
   editando = index;
   cancelEdit.style.display = "inline-block";
+}
+
+// Cancelar edição
+cancelEdit.addEventListener("click", () => {
+  editando = -1;
+  jogadoraForm.reset();
+  cancelEdit.style.display = "none";
+});
+
+// Remover jogadora
+function removerJogadora(index) {
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+  jogadoras.splice(index, 1);
+  localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
+  alert("Jogadora removida com sucesso!");
+  listarJogadoras();
+}
+
+// Favoritar jogadora
+function favoritarJogadora(index) {
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+  jogadoras[index].favorita = !jogadoras[index].favorita;
+  localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
+  listarJogadoras();
 }
