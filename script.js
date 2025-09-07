@@ -92,9 +92,28 @@ function listarJogadoras() {
     btnRemover.textContent = "🗑️ Excluir";
     btnRemover.addEventListener("click", () => removerJogadora(index));
 
+    //Botão de favoritar jogadora
+    const btnFavoritar = document.createElement("button");
+    btnFavoritar.className = "btn-favoritar";
+
+    const imgFavoritar = document.createElement("img");
+    imgFavoritar.src = jogadora.favorita
+      ? "./assets/icons/starSelect.svg"
+      : "./assets/icons/star.svg";
+    imgFavoritar.alt = "Favoritar";
+
+    btnFavoritar.innerHTML = "";
+    btnFavoritar.appendChild(imgFavoritar);
+
+    btnFavoritar.addEventListener("click", () => {
+      favoritarJogadora(index);
+    });
+
     lista.appendChild(card);
+    
     card.appendChild(btnEditar);
     card.appendChild(btnRemover);
+    card.appendChild(btnFavoritar);
   });
 }
 
@@ -175,5 +194,13 @@ function removerJogadora(index) {
   jogadoras.splice(index, 1);
   localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
   alert("Jogadora removida com sucesso!");
+  listarJogadoras();
+}
+
+// Favoritar jogadora
+function favoritarJogadora(index) {
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+  jogadoras[index].favorita = !jogadoras[index].favorita;
+  localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
   listarJogadoras();
 }
