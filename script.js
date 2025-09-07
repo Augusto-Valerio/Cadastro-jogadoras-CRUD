@@ -51,6 +51,10 @@ const dadosIniciais = [
   },
 ];
 
+const jogadoraForm = document.getElementById("jogadora-form");
+const cancelEdit = document.getElementById("cancelar-edicao");
+let editando = -1;
+
 // Inicializa localStorage
 window.onload = () => {
   if (!localStorage.getItem("jogadoras")) {
