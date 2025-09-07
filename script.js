@@ -87,8 +87,14 @@ function listarJogadoras() {
     btnEditar.textContent = "✏️ Editar";
     btnEditar.addEventListener("click", () => editarJogadora(index));
 
+     // Botão de excluir jogadora
+    const btnRemover = document.createElement("button");
+    btnRemover.textContent = "🗑️ Excluir";
+    btnRemover.addEventListener("click", () => removerJogadora(index));
+
     lista.appendChild(card);
     card.appendChild(btnEditar);
+    card.appendChild(btnRemover);
   });
 }
 
@@ -162,3 +168,12 @@ cancelEdit.addEventListener("click", () => {
   jogadoraForm.reset();
   cancelEdit.style.display = "none";
 });
+
+// Remover jogadora
+function removerJogadora(index) {
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+  jogadoras.splice(index, 1);
+  localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
+  alert("Jogadora removida com sucesso!");
+  listarJogadoras();
+}
