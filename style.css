@@ -79,3 +79,76 @@ h2 {
     }
   }
 }
+
+#lista-section {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  & h2 {
+    color: #ffffff;
+    padding-block: 20px;
+  }
+
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    position: relative;
+    background-image: url(./assets/images/backgroundCard.png);
+    background-position: top;
+    background-size: cover;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    & .btn-favoritar {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: none;
+      padding: unset;
+
+      & img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    & img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    & h3 {
+      margin: 10px 0;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    & p {
+      color: #fff;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+
+    & button {
+      margin: 5px 3px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+  }
+}
