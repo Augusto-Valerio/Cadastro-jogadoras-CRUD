@@ -56,4 +56,27 @@ window.onload = () => {
   if (!localStorage.getItem("jogadoras")) {
     localStorage.setItem("jogadoras", JSON.stringify(dadosIniciais));
   }
+  listarJogadoras();
 };
+
+function listarJogadoras() {
+  const lista = document.getElementById("lista-jogadoras");
+  lista.innerHTML = "";
+
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+
+  jogadoras.forEach((jogadora) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${jogadora.foto}" alt="${jogadora.nome}">
+      <h3>${jogadora.nome}</h3>
+      <p>Posição: ${jogadora.posicao}</p>
+      <p>Clube: ${jogadora.clube}</p>
+      <p>Gols: ${jogadora.gols} | Assistências: ${jogadora.assistencias} | Jogos: ${jogadora.jogos}</p>
+    `;
+
+    lista.appendChild(card);
+  });
+}
