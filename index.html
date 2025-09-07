@@ -12,6 +12,23 @@
   <header>
     <h1>Cadastro de Jogadoras de Futebol</h1>
   </header>
+
+  <section id="form-section">
+    <h2>Adicionar / Editar Jogadora</h2>
+    <form id="jogadora-form">
+      <input type="text" id="nome" placeholder="Nome" required>
+      <input type="text" id="posicao" placeholder="Posição" required>
+      <input type="text" id="clube" placeholder="Clube" required>
+      <input type="url" id="foto" placeholder="URL da foto" required>
+      <input type="number" id="gols" placeholder="Gols" min="0" required>
+      <input type="number" id="assistencias" placeholder="Assistências" min="0" required>
+      <input type="number" id="jogos" placeholder="Jogos" min="0" required>
+
+      <button type="submit">Salvar</button>
+      <button type="button" id="cancelar-edicao" style="display:none;">Cancelar Edição</button>
+    </form>
+  </section>
+  
   <script src="script.js"></script>
 </body>
 
