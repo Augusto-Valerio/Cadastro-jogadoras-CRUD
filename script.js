@@ -50,3 +50,10 @@ const dadosIniciais = [
     favorita: false,
   },
 ];
+
+// Inicializa localStorage
+window.onload = () => {
+  if (!localStorage.getItem("jogadoras")) {
+    localStorage.setItem("jogadoras", JSON.stringify(dadosIniciais));
+  }
+};
