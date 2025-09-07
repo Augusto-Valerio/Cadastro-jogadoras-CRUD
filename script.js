@@ -92,6 +92,53 @@ function listarJogadoras() {
   });
 }
 
+// Adicionar / Editar jogadora
+jogadoraForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const nome = document.getElementById("nome").value;
+  const posicao = document.getElementById("posicao").value;
+  const clube = document.getElementById("clube").value;
+  const foto = document.getElementById("foto").value;
+  const gols = document.getElementById("gols").value;
+  const assistencias = document.getElementById("assistencias").value;
+  const jogos = document.getElementById("jogos").value;
+
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+
+  if (editando === -1) {
+    jogadoras.push({
+      nome,
+      posicao,
+      clube,
+      foto,
+      gols,
+      assistencias,
+      jogos,
+      favorita: false,
+    });
+    alert("Jogadora adicionada com sucesso!");
+  } else {
+    jogadoras[editando] = {
+      nome,
+      posicao,
+      clube,
+      foto,
+      gols,
+      assistencias,
+      jogos,
+      favorita: jogadoras[editando].favorita,
+    };
+    alert("Jogadora editada com sucesso!");
+    editando = -1;
+    cancelEdit.style.display = "none";
+  }
+
+  localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
+  jogadoraForm.reset();
+  listarJogadoras();
+});
+
 // Editar jogadora
 function editarJogadora(index) {
   const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
