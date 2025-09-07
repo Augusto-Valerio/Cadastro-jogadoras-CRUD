@@ -59,13 +59,14 @@ window.onload = () => {
   listarJogadoras();
 };
 
+// Listar jogadoras
 function listarJogadoras() {
   const lista = document.getElementById("lista-jogadoras");
   lista.innerHTML = "";
 
   const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
 
-  jogadoras.forEach((jogadora) => {
+  jogadoras.forEach((jogadora, index) => {
     const card = document.createElement("div");
     card.className = "card";
 
@@ -77,6 +78,29 @@ function listarJogadoras() {
       <p>Gols: ${jogadora.gols} | Assistências: ${jogadora.assistencias} | Jogos: ${jogadora.jogos}</p>
     `;
 
+    // Botão de editar jogadora
+    const btnEditar = document.createElement("button");
+    btnEditar.textContent = "✏️ Editar";
+    btnEditar.addEventListener("click", () => editarJogadora(index));
+
     lista.appendChild(card);
+    card.appendChild(btnEditar);
   });
+}
+
+// Editar jogadora
+function editarJogadora(index) {
+  const jogadoras = JSON.parse(localStorage.getItem("jogadoras"));
+  const j = jogadoras[index];
+
+  document.getElementById("nome").value = j.nome;
+  document.getElementById("posicao").value = j.posicao;
+  document.getElementById("clube").value = j.clube;
+  document.getElementById("foto").value = j.foto;
+  document.getElementById("gols").value = j.gols;
+  document.getElementById("assistencias").value = j.assistencias;
+  document.getElementById("jogos").value = j.jogos;
+
+  editando = index;
+  cancelEdit.style.display = "inline-block";
 }
